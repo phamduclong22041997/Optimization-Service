@@ -1,0 +1,32 @@
+variables:
+  CI_PROJECT_NAME: wms-ops-optimization
+
+stages:
+  - build
+  - deploy
+
+.build_template: &build
+  stage: build
+  tags:
+  - runner_build
+  only:
+  - tags
+  - main
+  script: 
+    - bash $HOME/scripts/wms/build
+
+.deploy_template: &deploy
+  stage: deploy
+  tags:
+  - runner_deploy
+  only:
+  - tags
+  - main
+  script:
+    - bash $HOME/scripts/wms/build
+
+build:
+  <<: *build
+
+deploy:
+  <<: *deploy
